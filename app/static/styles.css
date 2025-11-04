@@ -1,0 +1,194 @@
+/* .progress-bar {
+  position: relative;
+  width: 180px;
+  height: 24px;
+  background: #f4f4f4;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 0 auto;
+  border: 2px solid #0056A0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #e8f8e8 0%, #0056A0 100%);
+  border-radius: 12px 0 0 12px;
+  transition: width 0.3s;
+}
+.progress-bar-label {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1em;
+  color: #0056A0;
+  line-height: 24px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px #fff;
+}
+body {
+  font-family: "Helvetica", Arial, sans-serif;
+  margin: 40px;
+  color: #333;
+}
+
+header {
+  text-align: center;
+  border-bottom: 2px solid #0056A0;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 100px;
+}
+
+h1, h2 {
+  color: #0056A0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  font-size: 0.9em;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f0f0f0;
+}
+
+tr.optimal td {
+  background-color: #e8f8e8;
+}
+
+tr.high td {
+  background-color: #ffe8e8;
+}
+
+tr.low td {
+  background-color: #fff4e5;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 0.8em;
+  color: #666;
+  border-top: 1px solid #ccc;
+  padding-top: 5px;
+}
+
+.progress-bar {
+  position: relative;
+  width: 100px;
+  height: 18px;
+  background: #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #e8f8e8 0%, #0056A0 100%);
+  border-radius: 8px 0 0 8px;
+  transition: width 0.3s;
+}
+.progress-bar-label {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8em;
+  color: #333;
+  line-height: 18px;
+  font-weight: bold;
+} */
+
+
+
+.biomarker-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+}
+
+.biomarker-header {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.range-bar-track {
+    height: 25px;
+    width: 100%;
+    /* Crea la barra de color con un degradado que refleja todos los rangos */
+    background: linear-gradient(
+        to right,
+        #e34c46 0%,  /* Rojo (Low) */
+        #f29729 20%, /* Naranja (Below Optimal) */
+        #65b25f 45%, /* Verde (Optimal) */
+        #f29729 70%, /* Naranja (Above Optimal) */
+        #e34c46 100% /* Rojo (High) */
+    );
+    border-radius: 5px;
+    position: relative; /* Importante para posicionar el marcador */
+}
+
+.result-marker {
+    position: absolute;
+    top: -5px; /* Sube un poco por encima de la barra */
+    transform: translateX(-50%);
+    width: 25px;
+    height: 25px;
+    background-color: white;
+    border: 5px solid #333; /* Círculo interior blanco con borde oscuro */
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.result-label {
+    position: absolute;
+    top: 30px;
+    transform: translateX(-50%);
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #333;
+    white-space: nowrap;
+}
+
+.range-limits {
+    display: flex;
+    justify-content: space-between; /* Distribuye los límites */
+    width: 100%;
+    margin-top: 5px;
+    font-size: 0.8em;
+    color: #555;
+    text-align: center;
+}
+
+.limit {
+    flex-grow: 1; /* Permite que los rangos ocupen espacio */
+    position: relative;
+    padding-top: 10px; /* Espacio para las líneas divisorias */
+}
+
+/* Opcional: Líneas divisorias verticales para los rangos */
+.limit:not(.low-end)::before {
+    content: '|';
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 1.2em;
+    color: #999;
+    font-weight: normal;
+}

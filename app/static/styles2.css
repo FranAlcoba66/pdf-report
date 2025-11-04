@@ -1,0 +1,179 @@
+/* ================================================= */
+/* === 0. Variables Globales y Estilos Generales === */
+/* ================================================= */
+:root {
+    /* Variables de Color del Reporte (Ajustadas para precisión) */
+    --color-alarm-low: #e54c46;    /* Rojo Intenso (Low/Alarm Low) */
+    --color-low: #f4d06a;          /* Amarillo/Naranja Suave (Below Optimal) */
+    --color-optimal: #76b772;      /* Verde Suave (Optimal) */
+    --color-above-optimal: #f3a652; /* Naranja/Ámbar (Above Optimal) */
+    --color-high: #cc4d4d;         /* Rojo Oscuro/Naranja Fuerte (High/Alarm High) */
+    
+    --color-text-dark: #333333;
+    --color-text-light: #555555;
+    --color-text-gray: #999999;
+    --color-divider: #dddddd;
+    --track-height: 15px; /* Ligeramente más delgada para el look de revista */
+    --max-width: 900px;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #ffffff;
+    color: var(--color-text-dark);
+    margin: 0;
+    padding: 30px;
+    line-height: 1.6;
+}
+
+h2 {
+    font-size: 1.8em;
+    color: var(--color-text-dark);
+    border-bottom: 2px solid var(--color-divider);
+    padding-bottom: 5px;
+    margin-top: 40px;
+}
+
+.container {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+/* ============================================== */
+/* === 1. Sección de Barra de Rango (Linear) === */
+/* ============================================== */
+.biomarker-container {
+    margin: 40px 0;
+}
+
+/* Título y Valor */
+.biomarker-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 5px;
+    font-size: 1.2em;
+}
+/* ... otros estilos de info ... */
+
+/* Barra de Visualización (Track) */
+.range-bar-wrapper {
+    position: relative; 
+    height: var(--track-height);
+    margin-top: 20px; /* Espacio para el marcador */
+}
+
+.range-bar-track {
+    height: 100%;
+    width: 100%;
+    border-radius: 3px;
+    /* Degradado lineal ajustado con colores y stops precisos */
+    background: linear-gradient(
+        to right,
+        var(--color-alarm-low) 0%,      /* Low/Alarm Low */
+        var(--color-low) 25%,           /* Below Optimal */
+        var(--color-optimal) 50%,       /* Optimal */
+        var(--color-above-optimal) 75%, /* Above Optimal */
+        var(--color-high) 100%          /* High/Alarm High */
+    );
+}
+
+/* Indicador Dinámico (Marker) */
+.result-marker-area {
+    position: absolute;
+    top: -10px; /* Posiciona el centro del círculo por encima del centro de la barra */
+    transform: translate(-50%, 0); 
+    z-index: 10;
+    /* 'left: X%' es el valor dinámico */
+}
+
+.result-marker-dot {
+    width: 20px; /* Tamaño del círculo */
+    height: 20px;
+    background-color: white;
+    border: 3px solid var(--color-text-dark); /* Borde negro como en el PDF */
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+/* Límites y Etiquetas de Rango */
+.range-limits-grid {
+    display: grid;
+    /* Ajustado a 5 columnas */
+    grid-template-columns: 1fr 1.5fr 1.5fr 1.5fr 1fr; 
+    text-align: center;
+    font-size: 0.75em;
+    color: var(--color-text-light);
+    margin-top: 10px;
+}
+
+.limit-cell {
+    line-height: 1.3;
+    padding-top: 5px;
+    position: relative;
+}
+
+/* Líneas divisorias (Ajustado para ser más sutil) */
+.limit-cell:not(:first-child)::before {
+    content: '';
+    position: absolute;
+    top: -20px; /* Coloca la línea sobre la barra */
+    left: 0;
+    width: 1px;
+    height: 35px; /* Longitud de la línea */
+    background-color: var(--color-divider);
+    opacity: 0.8;
+}
+
+/* Estilo para destacar el rango del paciente */
+.current-range {
+    font-weight: bold;
+    color: var(--color-text-dark);
+}
+
+/* ================================================= */
+/* === 2. Sección de Gráfico Radial (Conceptual) === */
+/* ================================================= */
+
+/* Tablas de Resumen - Mejorando los colores de las celdas de conteo */
+.summary-table {
+    /* ... otros estilos de tabla ... */
+    box-shadow: none; /* Quitamos la sombra para un look más limpio */
+    border: 1px solid #ccc; /* Añadimos un borde exterior */
+    border-radius: 5px;
+}
+
+.table-header, .table-cell {
+    padding: 8px 5px;
+}
+
+.table-header {
+    background-color: #f0f0f0;
+    color: var(--color-text-dark);
+}
+
+/* Ajuste de colores en las celdas de conteo */
+.cell-0, .cell-7 { background-color: var(--color-alarm-low); color: white; } /* Alarm Low, Alarm High */
+.cell-1, .cell-6 { background-color: var(--color-low); color: white; } /* Low, High */
+.cell-2, .cell-5 { background-color: var(--color-above-optimal); color: var(--color-text-dark); } /* Below Optimal, Above Optimal */
+.cell-3, .cell-4 { background-color: var(--color-optimal); color: var(--color-text-dark); } /* Optimal */
+
+.total-cell {
+    font-weight: bold;
+    background-color: var(--color-text-dark);
+    color: white;
+}
+/* ... otros estilos de la sección radial ... */
+
+.health-score {
+    color: var(--color-optimal); /* Manteniendo el verde para un puntaje de "salud" */
+}
+
+.dot.optimal { background-color: var(--color-optimal); }
+.dot.low { background-color: var(--color-above-optimal); } /* Usamos Above Optimal para Low/Above para consistencia visual */
+.dot.alarm { background-color: var(--color-alarm-low); }

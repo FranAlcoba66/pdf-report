@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Functional Health Report</title>
+  <link rel="stylesheet" href="{{ base_url }}/static/styles.css">
+</head>
+<body>
+  <header>
+    <!-- logo opcional -->
+    {% if data.logo %}
+      <img src="{{ data.logo }}" alt="Logo" class="logo">
+    {% else %}
+      <!-- si existe un logo estático en static/logo.png se mostrará -->
+      {% if ("logo.png") in (['logo.png'] if true else []) %}{% endif %}
+    {% endif %}
+    <h1>Functional Health Report</h1>
+    {% if data.patient and data.patient.name %}
+      <p><strong>Paciente:</strong> {{ data.patient.name }}</p>
+    {% endif %}
+    {% if data.report_date %}
+      <p><strong>Fecha:</strong> {{ data.report_date }}</p>
+    {% endif %}
+  </header>
+
+  {% if data.summary %}
+  <section class="intro">
+    <h2>Resumen General</h2>
+    <p>{{ data.summary }}</p>
+  </section>
+  {% endif %}
+
+  <section class="results">
+    <h2>Resultados de Biomarcadores</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Biomarcador</th>
+          <th>Valor</th>
+          <th>Unidad</th>
+          <th>Rangos</th>
+            <th>Progreso</th>
+        </tr>
+      </thead>
+      <tbody>
+        {# Soportar tanto la nueva clave `determinaciones` como la antigua `biomarkers` #}
+        {% set dets = data.determinaciones if data.determinaciones is defined else (data.biomarkers if data.biomarkers is defined else []) %}
+        {% for item in dets %}
+        <tr>
+          <td>{{ item.determinacion if item.determinacion is defined else item.name }}</td>
+          <td>{{ item.valor_numerico if item.valor_numerico is defined else item.value }}</td>
+          <td>{{ item.unidad_medida if item.unidad_medida is defined else item.unit }}</td>
+          <td>
+            {% if item.rangos %}
+              <ul class="rangos-list">
+                {% for label, rng in item.rangos.items() %}
+                  <li><strong>{{ label }}:</strong> {{ rng }}</li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              &mdash;
+            {% endif %}
+          </td>
+            <td>
+              {% if item.rangos %}
+                {% set valor = item.valor_numerico if item.valor_numerico is defined else item.value %}
+                {% set optimal_range = item.rangos['Optimal'] if 'Optimal' in item.rangos else None %}
+                {% if optimal_range %}
+                  {% set min_opt = optimal_range.split('-')[0]|replace('>', '')|replace('<', '')|float %}
+                  {% set max_opt = optimal_range.split('-')[1]|replace('>', '')|replace('<', '')|float %}
+                  {% set min_bar = min_opt %}
+                  {% set max_bar = max_opt %}
+                  {% if valor < min_bar %}
+                    {% set percent = 0 %}
+                  {% elif valor > max_bar %}
+                    {% set percent = 100 %}
+                  {% else %}
+                    {% set percent = ((valor - min_bar) / (max_bar - min_bar) * 100)|round(1) %}
+                  {% endif %}
+                  <div class="progress-bar">
+                    <div class="progress-bar-fill" style="width: {{ percent }}%;"></div>
+                    <span class="progress-bar-label">{{ valor }}</span>
+                  </div>
+                {% else %}
+                  &mdash;
+                {% endif %}
+              {% else %}
+                &mdash;
+              {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <footer>
+    <p>Reporte generado automáticamente{% if data.footer_note %} - {{ data.footer_note }}{% endif %}</p>
+  </footer>
+</body>
+</html>
