@@ -5,10 +5,10 @@
     "biomarkers": [
         {
             "name": "Glucose Fasting",
-            "value": 94.00,
+            "value": 70.00,
             "unit": "mg/dL",
-            "min_range_value": 65.00,  
-            "max_range_value": 110.00, 
+            "min_range_value": 65.00,
+            "max_range_value": 110.00,
             "limits": [
                 {"label": "Low", "range_text": "<65.00", "is_current": false},
                 {"label": "Below Optimal", "range_text": "65.00-75.00", "is_current": false},
@@ -21,8 +21,8 @@
             "name": "Hemoglobin A1C",
             "value": 4.80,
             "unit": "%",
-            "min_range_value": 4.00, 
-            "max_range_value": 9.00, 
+            "min_range_value": 4.00,
+            "max_range_value": 9.00,
             "limits": [
                 {"label": "Below Optimal", "range_text": "<4.60", "is_current": false},
                 {"label": "Optimal", "range_text": "4.60-5.30", "is_current": true},
@@ -46,5 +46,22 @@
             {"text": "**14** Biomarcadores Above Optimal", "class": "low"},
             {"text": "**4** Biomarcadores en Alto/Alarma", "class": "alarm"}
         ]
+    },
+    "support_needs": [
+        {"name": "Vitamin D Support", "value": 100, "color_class": "high-risk"},
+        {"name": "Glutathione Support", "value": 100, "color_class": "high-risk"},
+        {"name": "Anti-Inflammatory Support", "value": 75, "color_class": "moderate-risk"},
+        {"name": "Blood Sugar Support", "value": 67, "color_class": "possible-risk"},
+        {"name": "Cardio Support", "value": 64, "color_class": "possible-risk"},
+        {"name": "Liver Support", "value": 62, "color_class": "possible-risk"},
+        {"name": "Fatty Liver Support", "value": 60, "color_class": "possible-risk"},
+        {"name": "Bacterial Support", "value": 57, "color_class": "possible-risk"},
+        {"name": "Red Blood Cell Support", "value": 54, "color_class": "possible-risk"},
+        {"name": "Protein Support", "value": 50, "color_class": "possible-risk"}
+    ],
+    "liver_support": {
+        "score": 62,
+        "risk_level": "POSSIBLE",
+        "rationale": ["ALT ↑", "AST ↑", "GGT ↑", "BUN ↓"]
     }
 }

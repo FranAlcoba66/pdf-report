@@ -10,11 +10,11 @@
         /* === 0. Variables Globales y Estilos Generales === */
         /* ================================================= */
         :root {
-            /* Variables de Color del Reporte (Optimizado para la barra) */
-            --color-alarm-low: #e54c46;    /* Rojo Intenso (Low/Alarm Low) */
-            --color-low: #f4d06a;          /* Amarillo/Naranja Suave (Below Optimal) */
-            --color-optimal: #76b772;      /* Verde Suave (Optimal) */
-            --color-above-optimal: #f3a652; /* Naranja/Ámbar (Above Optimal) */
+            /* Colores Base del Reporte */
+            --color-alarm-low: #e54c46;    /* Rojo Intenso (High Risk) */
+            --color-low: #f4d06a;          /* Amarillo/Naranja Suave (Low/Below Optimal) */
+            --color-optimal: #76b772;      /* Verde Suave (Optimal/Less Likely) */
+            --color-above-optimal: #f3a652; /* Naranja/Ámbar (Above Optimal/Possible) */
             --color-high: #cc4d4d;         /* Rojo Oscuro/Naranja Fuerte (High/Alarm High) */
             
             --color-text-dark: #333333;
@@ -23,6 +23,13 @@
             --color-divider: #dddddd;
             --track-height: 15px; 
             --max-width: 900px;
+
+            /* Colores de soporte/riesgo */
+            --color-less-likely: #76b772; /* Verde */
+            --color-possible-risk: #f3a652; /* Naranja */
+            --color-moderate-risk: #f47d46; /* Naranja oscuro */
+            --color-high-risk: #e54c46; /* Rojo */
+            --color-support-bg: #e0e0e0;
         }
 
         body {
@@ -53,15 +60,21 @@
             margin: 0 auto;
         }
 
+        /* Bloques de sección */
+        .biomarker-container, .summary-table, .radial-chart-container, .support-section-wrapper {
+            page-break-inside: avoid;
+        }
+
+
         /* ============================================== */
         /* === 1. Sección de Barra de Rango (Linear) === */
         /* ============================================== */
+        /* ... (CSS existente para la barra de rango lineal) ... */
         .biomarker-container {
             margin: 40px 0;
             page-break-inside: avoid; 
         }
 
-        /* Título y Valor */
         .biomarker-info {
             display: flex;
             justify-content: space-between;
@@ -80,7 +93,6 @@
             color: var(--color-text-light);
         }
 
-        /* Barra de Visualización (Track) */
         .range-bar-wrapper {
             position: relative; 
             height: var(--track-height);
@@ -101,7 +113,6 @@
             );
         }
 
-        /* Indicador Dinámico (Marker) */
         .result-marker-area {
             position: absolute;
             top: -10px; 
@@ -122,7 +133,6 @@
             box-shadow: 0 0 5px rgba(0,0,0,0.2);
         }
 
-        /* Límites y Etiquetas de Rango */
         .range-limits-grid {
             display: grid;
             grid-template-columns: 1fr 1.5fr 1.5fr 1.5fr 1fr; 
@@ -138,7 +148,6 @@
             position: relative;
         }
 
-        /* Líneas divisorias verticales */
         .limit-cell:not(:first-child)::before {
             content: '';
             position: absolute;
@@ -155,84 +164,11 @@
             color: var(--color-text-dark);
         }
         
-        /* ================================================= */
-        /* === 2. Sección de Gráfico Radial (Conceptual) === */
-        /* ================================================= */
-        .chart-section-title {
-            margin-bottom: 20px;
-        }
-        
-        .radial-chart-container {
-            display: flex;
-            gap: 50px;
-            align-items: flex-start;
-            padding: 30px 0;
-            page-break-inside: avoid;
-        }
+        /* ============================================== */
+        /* === 2. y 3. Tablas y Gráfico Radial          === */
+        /* ============================================== */
+        /* ... (CSS existente para las secciones 2 y 3) ... */
 
-        #chart-wrapper {
-            width: 50%;
-            min-height: 300px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #f7f7f7;
-            color: var(--color-text-gray);
-            border-radius: 8px;
-            border: 1px solid #eee;
-            text-align: center;
-        }
-
-        .key-summary {
-            width: 50%;
-            padding: 10px;
-        }
-
-        .key-summary h4 {
-            font-weight: bold;
-            color: var(--color-text-dark);
-            margin-top: 0;
-            border-bottom: 1px dashed var(--color-divider);
-            padding-bottom: 10px;
-        }
-        
-        .health-score {
-            font-size: 4em;
-            font-weight: 700;
-            color: var(--color-optimal); 
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .score-breakdown {
-            list-style: none;
-            padding: 0;
-        }
-
-        .score-breakdown li {
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            font-size: 0.9em;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            margin-right: 10px;
-            flex-shrink: 0;
-        }
-
-        /* Colores de las bolitas de la leyenda */
-        .dot.optimal { background-color: var(--color-optimal); }
-        .dot.low { background-color: var(--color-above-optimal); }
-        .dot.alarm { background-color: var(--color-alarm-low); }
-
-
-        /* ================================== */
-        /* === 3. Tabla de Resumen (Grid) === */
-        /* ================================== */
         .summary-table {
             display: grid;
             grid-template-columns: repeat(7, 1fr) 1.2fr; 
@@ -246,6 +182,14 @@
             page-break-inside: avoid;
         }
 
+        .radial-chart-container {
+            display: flex;
+            gap: 50px;
+            align-items: flex-start;
+            padding: 30px 0;
+            page-break-inside: avoid;
+        }
+        
         .table-header, .table-cell {
             padding: 8px 5px;
             background-color: #f9f9f9;
@@ -257,7 +201,6 @@
             color: var(--color-text-dark);
         }
 
-        /* Colores de fondo de las celdas de conteo (Lógica Jinja para colores) */
         {% set colors = ['var(--color-alarm-low)', 'var(--color-low)', 'var(--color-above-optimal)', 'var(--color-optimal)', 'var(--color-optimal)', 'var(--color-above-optimal)', 'var(--color-low)', 'var(--color-alarm-low)'] %}
         
         {% for i in range(8) %}
@@ -278,6 +221,176 @@
             color: var(--color-text-dark);
             font-weight: bold;
         }
+
+        .health-score {
+            font-size: 4em;
+            font-weight: 700;
+            color: var(--color-optimal); 
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /* ============================================== */
+        /* === 4. Sección de Barras de Soporte (Need) === */
+        /* ============================================== */
+        .support-needs-header {
+            display: grid;
+            grid-template-columns: 1fr repeat(4, 0.5fr);
+            text-align: center;
+            font-size: 0.9em;
+            font-weight: bold;
+            color: var(--color-text-light);
+            padding-bottom: 10px;
+            margin-top: 15px;
+        }
+
+        .support-needs-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .support-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .support-name {
+            width: 30%;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .support-bar-container {
+            width: 70%;
+            position: relative;
+            height: 25px;
+            background: var(--color-support-bg);
+            border-radius: 5px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .support-bar-fill {
+            height: 100%;
+            border-radius: 5px;
+            /* Degradado base de color-optimal a color-high */
+            background: linear-gradient(
+                to right,
+                var(--color-less-likely) 0%,
+                var(--color-less-likely) 50%,
+                var(--color-above-optimal) 70%,
+                var(--color-high-risk) 100%
+            );
+            transition: width 0.5s ease-in-out;
+        }
+
+        .support-value {
+            position: absolute;
+            top: 50%;
+            left: calc(var(--value) * 1% + 5px); /* Posición del valor ligeramente a la derecha del final de la barra */
+            transform: translateY(-50%);
+            font-weight: bold;
+            color: var(--color-text-dark);
+            font-size: 0.8em;
+            z-index: 20;
+            /* Si el valor es muy alto, lo ponemos dentro de la barra */
+            {% raw %}
+            /* Esta lógica es difícil en CSS, se asume que se superpone */
+            {% endraw %}
+        }
+        
+        .support-value-text {
+            color: white; /* Color para el texto dentro de la barra (ej: 100%) */
+            position: absolute;
+            right: 10px;
+            font-size: 0.8em;
+            font-weight: bold;
+            z-index: 11; 
+        }
+
+        /* Colores de las barras basados en el riesgo (se superponen al degradado base) */
+        .high-risk .support-bar-fill { background-color: var(--color-high-risk); }
+        .moderate-risk .support-bar-fill { background-color: var(--color-moderate-risk); }
+        .possible-risk .support-bar-fill { background-color: var(--color-above-optimal); }
+        .less-likely .support-bar-fill { background-color: var(--color-less-likely); }
+
+        /* ============================================== */
+        /* === 5. Detalle de Soporte (Gráfico Anillo) === */
+        /* ============================================== */
+        .detail-support-container {
+            display: flex;
+            gap: 40px;
+            padding: 30px 0;
+            align-items: flex-start;
+            page-break-inside: avoid;
+        }
+        
+        .detail-text-content {
+            flex: 2;
+        }
+
+        .detail-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--color-text-dark);
+            margin-bottom: 10px;
+        }
+
+        .rationale-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 15px;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 15px;
+        }
+
+        /* Estilo para el Gráfico Anillo (simulado con HTML/CSS) */
+        .pie-chart-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 180px; /* Tamaño fijo para el PDF */
+            height: 180px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--color-above-optimal) 0% {{ data.liver_support.score }}%,
+                var(--color-support-bg) {{ data.liver_support.score }}% 100%
+            );
+        }
+
+        .pie-chart-inner {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .pie-score {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--color-above-optimal);
+            line-height: 1;
+        }
+
+        .pie-risk {
+            font-size: 0.9em;
+            color: var(--color-above-optimal);
+            font-weight: bold;
+        }
+
     </style>
 </head>
 <body>
@@ -346,6 +459,52 @@
                 </ul>
             </div>
         </div>
+        
+        <h2 style="margin-top: 60px;">4. Necesidad de Soporte (Resumen General)</h2>
+
+        <div class="support-needs-header">
+            <div>&nbsp;</div>
+            <div>Less Likely <50%</div>
+            <div>Possible 50-70%</div>
+            <div>Moderate 70-90%</div>
+            <div>High 90-100%</div>
+        </div>
+        
+        <div class="support-needs-grid">
+            {% for item in data.support_needs %}
+            <div class="support-item">
+                <div class="support-name">{{ item.name }}</div>
+                <div class="support-bar-container">
+                    <div class="support-bar-fill {{ item.color_class }}" style="width: {{ item.value }}%;">
+                        <span class="support-value-text">{{ item.value }}%</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <h2 style="margin-top: 60px;">5. Detalle de Soporte Específico</h2>
+        
+        <div class="detail-support-container">
+            <div class="detail-text-content">
+                <div class="detail-title">LIVER SUPPORT </div>
+                <p>The results of this blood test indicate a tendency towards liver dysfunction and a need for liver support.</p>
+                <p style="font-weight: bold; margin-top: 20px;">Rationale</p>
+                <ul class="rationale-list">
+                    {% for item in data.liver_support.rationale %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="pie-chart-wrapper">
+                <div class="pie-chart-inner">
+                    <div class="pie-score">{{ data.liver_support.score }}%</div>
+                    <div class="pie-risk">{{ data.liver_support.risk_level }}</div>
+                </div>
+            </div>
+        </div>
+        
 
     </div>
 
